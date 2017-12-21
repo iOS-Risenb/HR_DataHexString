@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'HR_DataHexString_Example' do
+  pod 'HR_DataHexString', :path => '../'
+
+  target 'HR_DataHexString_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
