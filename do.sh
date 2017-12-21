@@ -11,12 +11,13 @@ then
 var_StartStep=1
 fi
 
+firstPush=false
+
 
 if [ $var_StartStep -le 1 ]
 then
 
 printf "\nStep1: remote verifying ...\n"
-firstPush=false
 result_gitRemote=`git remote`
 if [ -z "$result_gitRemote" ];
 then
@@ -67,54 +68,53 @@ then
 git push -u origin master
 else
 git push
+fi
 echo "✅✅✅ push code finish"
 fi
 
-fi
 
 
-
-######################################
-if [ $var_StartStep -le 4 ]
-then
-
-printf "\nStep4: push tag to git ...\n"
-read -p "input commit tag: " var_commitTag
-git tag $var_commitTag
-git push --tags
-echo "✅✅✅ push tag finish"
-
-fi
-
-
-
-######################################
-if [ $var_StartStep -le 5 ]
-then
-printf "\nStep5: pod spec lint ...\n"
-result_podSpecLint=`pod spec lint --allow-warnings`
-#var1=`pod lib lint --sources='https://gitee.com/jiqirenapp/JQRPods.git','https://gitee.com/hongruisibo_iOS/hrpods.git','https://github.com/CocoaPods/Specs.git' --allow-warnings
-echo $result_podSpecLint |grep -q "passed validation"
-if [ $? -eq 0 ]
-then
-echo "✅✅✅ pod spec lint success"
-else
-echo "❌❌❌ pod spec lint failure"
-exit
-fi
-
-fi
-
-
-######################################
-if [ $var_StartStep -le 6 ]
-then
-
-printf "\nStep6: pod trunk push ...\n"
-pod trunk push --allow-warnings
-echo "✅✅✅  pod trunk push finish -> ${var_commitTag}"
-
-fi
+#######################################
+#if [ $var_StartStep -le 4 ]
+#then
+#
+#printf "\nStep4: push tag to git ...\n"
+#read -p "input commit tag: " var_commitTag
+#git tag $var_commitTag
+#git push --tags
+#echo "✅✅✅ push tag finish"
+#
+#fi
+#
+#
+#
+#######################################
+#if [ $var_StartStep -le 5 ]
+#then
+#printf "\nStep5: pod spec lint ...\n"
+#result_podSpecLint=`pod spec lint --allow-warnings`
+##var1=`pod lib lint --sources='https://gitee.com/jiqirenapp/JQRPods.git','https://gitee.com/hongruisibo_iOS/hrpods.git','https://github.com/CocoaPods/Specs.git' --allow-warnings
+#echo $result_podSpecLint |grep -q "passed validation"
+#if [ $? -eq 0 ]
+#then
+#echo "✅✅✅ pod spec lint success"
+#else
+#echo "❌❌❌ pod spec lint failure"
+#exit
+#fi
+#
+#fi
+#
+#
+#######################################
+#if [ $var_StartStep -le 6 ]
+#then
+#
+#printf "\nStep6: pod trunk push ...\n"
+#pod trunk push --allow-warnings
+#echo "✅✅✅  pod trunk push finish -> ${var_commitTag}"
+#
+#fi
 
 
 
