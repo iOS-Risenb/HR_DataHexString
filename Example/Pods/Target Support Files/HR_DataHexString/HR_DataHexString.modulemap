@@ -1,0 +1,6 @@
+framework module HR_DataHexString {
+  umbrella header "HR_DataHexString-umbrella.h"
+
+  export *
+  module * { export * }
+}
