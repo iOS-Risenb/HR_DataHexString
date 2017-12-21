@@ -75,7 +75,7 @@ fi
 
 
 ######################################
-if [ $var_StartStep -l3 4 ]
+if [ $var_StartStep -le 4 ]
 then
 
 printf "\nStep4: push tag to git ...\n"
