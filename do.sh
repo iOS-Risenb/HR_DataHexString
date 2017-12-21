@@ -1,5 +1,19 @@
+printf "Step1: remote verify\n"
+printf "Step2: pod lib lint\n"
+printf "Step3: push code to git\n"
+printf "Step4: push tag to git\n"
+printf "Step5: pod spec lint\n"
+printf "Step6: pod trunk push\n"
+read -p "Start with the step:" var_StartStep
+
+if [ ! $var_StartStep ]
+then
+var_StartStep=1
+fi
 
 
+if [ $var_StartStep -le 1 ]
+then
 
 printf "\nStep1: remote verifying ...\n"
 firstPush=false
@@ -18,6 +32,12 @@ else
 echo "✅✅✅ remote verify success"
 fi
 
+fi
+
+
+######################################
+if [ $var_StartStep -le 2 ]
+then
 
 printf "\nStep2: pod lib lint ...\n"
 result_podLibLint=`pod lib lint --allow-warnings`
@@ -31,6 +51,12 @@ echo "❌❌❌ pod lib lint failure"
 exit
 fi
 
+fi
+
+
+######################################
+if [ $var_StartStep -le 3 ]
+then
 
 printf "\nStep3: push code to git ...\n"
 read -p "input commit log: " var_commitLog
@@ -41,17 +67,30 @@ then
 git push -u origin master
 else
 git push
+echo "✅✅✅ push code finish"
 fi
-echo "✅✅✅ push code complete"
 
+fi
+
+
+
+######################################
+if [ $var_StartStep -l3 4 ]
+then
 
 printf "\nStep4: push tag to git ...\n"
 read -p "input commit tag: " var_commitTag
 git tag $var_commitTag
 git push --tags
-echo "✅✅✅ push tag complete"
+echo "✅✅✅ push tag finish"
+
+fi
 
 
+
+######################################
+if [ $var_StartStep -le 5 ]
+then
 printf "\nStep5: pod spec lint ...\n"
 result_podSpecLint=`pod spec lint --allow-warnings`
 #var1=`pod lib lint --sources='https://gitee.com/jiqirenapp/JQRPods.git','https://gitee.com/hongruisibo_iOS/hrpods.git','https://github.com/CocoaPods/Specs.git' --allow-warnings
@@ -64,12 +103,18 @@ echo "❌❌❌ pod spec lint failure"
 exit
 fi
 
+fi
+
+
+######################################
+if [ $var_StartStep -le 6 ]
+then
 
 printf "\nStep6: pod trunk push ...\n"
 pod trunk push --allow-warnings
-echo "✅✅✅  pod trunk push complete -> ${var_commitTag}"
+echo "✅✅✅  pod trunk push finish -> ${var_commitTag}"
 
-
+fi
 
 
 
